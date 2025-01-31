@@ -44,8 +44,18 @@ class DetailsPage extends ConsumerWidget {
           vertical: 48.0,
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.network(country.flagUrl),
+            Expanded(
+              child: country.flagUrl != ""
+                  ? Expanded(
+                      child: Image.network(
+                        country.flagUrl,
+                        fit: BoxFit.fitWidth,
+                      ),
+                    )
+                  : Text(country.flagAlt),
+            ),
             Text('${country.id} - ${country.shortName}'),
           ],
         ),
