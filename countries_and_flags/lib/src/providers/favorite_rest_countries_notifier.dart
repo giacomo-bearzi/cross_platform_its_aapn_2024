@@ -6,7 +6,7 @@ part 'favorite_rest_countries_notifier.g.dart';
 class FavoriteRestCountriesNotifier extends _$FavoriteRestCountriesNotifier {
   @override
   List<RestCountryModel> build() {
-    ref.keepAlive();
+    // ref.keepAlive();
     return [];
   }
 
