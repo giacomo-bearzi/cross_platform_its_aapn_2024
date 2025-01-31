@@ -16,19 +16,27 @@ class CountriesAndFlagsApi {
 
   Future<List<RestCountriesResponseApiModel>> fetchAll() async {
     final response = await client.get('all?fields=name,flags,cca2');
-    final model = List.from(response.data);
-    return model
-        .map((countryJson) =>
-            RestCountriesResponseApiModel.fromJson(countryJson))
-        .toList();
+    final data = [
+      for (final element in response.data!)
+        RestCountriesResponseApiModel.fromJson(element),
+    ];
+    return data;
   }
 
   Future<List<RestCountriesResponseApiModel>> searchBy(String query) async {
     final response = await client.get('name/$query?fields=name,flags,cca2');
-    final model = List.from(response.data);
-    return model
-        .map((countryJson) =>
-            RestCountriesResponseApiModel.fromJson(countryJson))
-        .toList();
+    final data = [
+      for (final element in response.data!)
+        RestCountriesResponseApiModel.fromJson(element),
+    ];
+    return data;
   }
 }
+
+// Old
+// final response = await client.get('...');
+// final data = List.from(response.data);
+// return data
+//     .map((countryJson) =>
+//         RestCountriesResponseApiModel.fromJson(countryJson))
+//     .toList();
