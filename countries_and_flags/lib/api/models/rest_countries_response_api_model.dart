@@ -1,5 +1,5 @@
-import 'package:countries_and_flags/api/models/rest_country_flags_api_model.dart';
-import 'package:countries_and_flags/api/models/rest_country_name_api_model.dart';
+import 'package:countries_and_flags/api/models/rest_countries_flags_api_model.dart';
+import 'package:countries_and_flags/api/models/rest_countries_name_api_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 

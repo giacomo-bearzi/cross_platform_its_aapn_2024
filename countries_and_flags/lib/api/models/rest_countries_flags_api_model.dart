@@ -1,8 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
-part 'rest_country_flags_api_model.freezed.dart';
-part 'rest_country_flags_api_model.g.dart';
+part 'rest_countries_flags_api_model.freezed.dart';
+part 'rest_countries_flags_api_model.g.dart';
 
 @freezed
 class RestCountryFlagsApiModel with _$RestCountryFlagsApiModel {

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'rest_country_flags_api_model.dart';
+part of 'rest_countries_flags_api_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
