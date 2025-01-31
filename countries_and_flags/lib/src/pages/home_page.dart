@@ -4,6 +4,7 @@ import 'package:countries_and_flags/src/providers/rest_countries_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -13,6 +14,9 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
+  final form = FormGroup({'query': FormControl<String>(value: '')});
+  String? _query;
+
   @override
   Widget build(BuildContext context) {
     final restCountries = ref.watch(restCountriesProvider);
@@ -44,69 +48,99 @@ class _HomePageState extends ConsumerState<HomePage> {
           horizontal: 96.0,
           vertical: 48.0,
         ),
-        child: switch (restCountries) {
-          AsyncData(:final value) => GridView.count(
-              crossAxisCount: 2,
-              children: [
-                for (final country in value) //
-                  GestureDetector(
-                    onTap: () {
-                      context.pushNamed(
-                        'details',
-                        extra: country,
-                      );
+        child: ReactiveForm(
+          formGroup: form,
+          child: Column(
+            children: [
+              ReactiveTextField<String>(
+                formControlName: 'query',
+                decoration: InputDecoration(
+                  hintText: 'Italy',
+                  label: const Text('Cerca un Paese'),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      // @TODO: funzione cancella campo
                     },
-                    child: Card(
-                      child: Column(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              ref //
-                                      .read(
-                                          favoriteRestCountriesNotifierProvider
-                                              .notifier)
-                                      .checkFavorite(country)
-                                  ? ref //
-                                      .read(
-                                          favoriteRestCountriesNotifierProvider
-                                              .notifier)
-                                      .remove(country)
-                                  : ref //
-                                      .read(
-                                          favoriteRestCountriesNotifierProvider
-                                              .notifier)
-                                      .add(country);
+                    icon: const Icon(Icons.cancel_rounded),
+                  ),
+                ),
+                onSubmitted: (control) {
+                  // @TODO: funzione invio nome
+                },
+              ),
+              const SizedBox(
+                height: 16.0,
+              ),
+              Expanded(
+                child: switch (restCountries) {
+                  AsyncData(:final value) => GridView.count(
+                      crossAxisCount: 2,
+                      children: [
+                        for (final country in value) //
+                          GestureDetector(
+                            onTap: () {
+                              context.pushNamed(
+                                'details',
+                                extra: country,
+                              );
                             },
-                            icon: ref //
-                                    .read(favoriteRestCountriesNotifierProvider
-                                        .notifier)
-                                    .checkFavorite(country)
-                                ? const Icon(Icons.favorite_rounded)
-                                : const Icon(Icons.favorite_border_rounded),
-                            style: IconButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              foregroundColor: Colors.red,
+                            child: Card(
+                              child: Column(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      ref //
+                                              .read(
+                                                  favoriteRestCountriesNotifierProvider
+                                                      .notifier)
+                                              .checkFavorite(country)
+                                          ? ref //
+                                              .read(
+                                                  favoriteRestCountriesNotifierProvider
+                                                      .notifier)
+                                              .remove(country)
+                                          : ref //
+                                              .read(
+                                                  favoriteRestCountriesNotifierProvider
+                                                      .notifier)
+                                              .add(country);
+                                    },
+                                    icon: ref //
+                                            .read(
+                                                favoriteRestCountriesNotifierProvider
+                                                    .notifier)
+                                            .checkFavorite(country)
+                                        ? const Icon(Icons.favorite_rounded)
+                                        : const Icon(
+                                            Icons.favorite_border_rounded),
+                                    style: IconButton.styleFrom(
+                                      backgroundColor: Colors.white,
+                                      foregroundColor: Colors.red,
+                                    ),
+                                  ),
+                                  country.flagUrl != ""
+                                      ? Expanded(
+                                          child: Image.network(country.flagUrl),
+                                        )
+                                      : Text(country.flagAlt),
+                                  Text('${country.id} - ${country.shortName}')
+                                ],
+                              ),
                             ),
                           ),
-                          country.flagUrl != ""
-                              ? Expanded(
-                                  child: Image.network(country.flagUrl),
-                                )
-                              : Text(country.flagAlt),
-                          Text('${country.id} - ${country.shortName}')
-                        ],
-                      ),
+                      ],
                     ),
-                  ),
-              ],
-            ),
-          AsyncError() => const Center(
-              child: Text('Errore caricamento lista Paesi'),
-            ),
-          _ => const Center(
-              child: CircularProgressIndicator(),
-            ),
-        },
+                  AsyncError() => const Center(
+                      child: Text('Errore caricamento lista Paesi'),
+                    ),
+                  _ => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                },
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
