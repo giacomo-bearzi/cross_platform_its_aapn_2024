@@ -2,6 +2,7 @@ import 'package:countries_and_flags/src/models/rest_country_model.dart';
 import 'package:countries_and_flags/src/providers/favorite_rest_countries_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class FavoritesPage extends ConsumerWidget {
   const FavoritesPage({super.key});
@@ -19,16 +20,33 @@ class FavoritesPage extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 96.0, vertical: 48.0),
         child: ListView(
           children: [
-            for (final country in favoriteCountries) //
+            for (final favorite in favoriteCountries) //
               ListTile(
-                leading: Text(country.id),
-                title: Text(country.longName),
+                onTap: () {
+                  context.pushNamed('details', extra: favorite);
+                },
+                leading: Text(favorite.id),
+                title: Text(favorite.longName),
                 trailing: IconButton(
                   onPressed: () {
-                    // @TODO: funzione aggiunta/rimozione preferiti
+                    ref //
+                            .read(
+                                favoriteRestCountriesNotifierProvider.notifier)
+                            .checkFavorite(favorite)
+                        ? ref //
+                            .read(
+                                favoriteRestCountriesNotifierProvider.notifier)
+                            .remove(favorite)
+                        : ref //
+                            .read(
+                                favoriteRestCountriesNotifierProvider.notifier)
+                            .add(favorite);
                   },
-                  // @TODO: funzione per cambio icona
-                  icon: const Icon(Icons.favorite_border_rounded),
+                  icon: const Icon(Icons.favorite_rounded),
+                  style: IconButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.red,
+                  ),
                 ),
               )
           ],
