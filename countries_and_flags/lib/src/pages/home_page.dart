@@ -57,12 +57,31 @@ class HomePage extends ConsumerWidget {
                           IconButton(
                             onPressed: () {
                               ref //
-                                  .read(favoriteRestCountriesNotifierProvider
-                                      .notifier)
-                                  .add(country);
+                                      .read(
+                                          favoriteRestCountriesNotifierProvider
+                                              .notifier)
+                                      .checkFavorite(country)
+                                  ? ref //
+                                      .read(
+                                          favoriteRestCountriesNotifierProvider
+                                              .notifier)
+                                      .remove(country)
+                                  : ref //
+                                      .read(
+                                          favoriteRestCountriesNotifierProvider
+                                              .notifier)
+                                      .add(country);
                             },
-                            // @TODO: cambio icona
-                            icon: const Icon(Icons.favorite_border_rounded),
+                            icon: ref //
+                                    .read(favoriteRestCountriesNotifierProvider
+                                        .notifier)
+                                    .checkFavorite(country)
+                                ? const Icon(Icons.favorite_rounded)
+                                : const Icon(Icons.favorite_border_rounded),
+                            style: IconButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.red,
+                            ),
                           ),
                           country.flagUrl != ""
                               ? Expanded(
