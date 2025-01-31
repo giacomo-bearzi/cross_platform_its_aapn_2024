@@ -22,4 +22,13 @@ class CountriesAndFlagsApi {
             RestCountriesResponseApiModel.fromJson(countryJson))
         .toList();
   }
+
+  Future<List<RestCountriesResponseApiModel>> searchBy(String query) async {
+    final response = await client.get('name/$query?fields=name,flags,cca2');
+    final model = List.from(response.data);
+    return model
+        .map((countryJson) =>
+            RestCountriesResponseApiModel.fromJson(countryJson))
+        .toList();
+  }
 }
