@@ -1,4 +1,5 @@
 import 'package:countries_and_flags/src/models/rest_country_model.dart';
+import 'package:countries_and_flags/src/providers/favorite_rest_countries_notifier.dart';
 import 'package:countries_and_flags/src/providers/rest_countries_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,6 +11,9 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final restCountries = ref.watch(restCountriesProvider);
+    final favoritesCounter = ref.watch(
+      favoriteRestCountriesNotifierProvider.select((value) => value.length),
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -19,11 +23,10 @@ class HomePage extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: Badge.count(
-              // @TODO: fare il counter
-              count: 1,
+              count: favoritesCounter,
               child: IconButton(
                 onPressed: () {
-                  // @TODO: navigazione pagina preferiti
+                  context.pushNamed('favorites');
                 },
                 icon: const Icon(Icons.favorite_rounded),
               ),
@@ -53,19 +56,24 @@ class HomePage extends ConsumerWidget {
                         children: [
                           IconButton(
                             onPressed: () {
-                              // @TODO: aggiunta ai preferiti
+                              ref //
+                                  .read(favoriteRestCountriesNotifierProvider
+                                      .notifier)
+                                  .add(country);
                             },
                             // @TODO: cambio icona
                             icon: const Icon(Icons.favorite_border_rounded),
                           ),
                           country.flagUrl != ""
-                              ? Image.network(country.flagUrl)
+                              ? Expanded(
+                                  child: Image.network(country.flagUrl),
+                                )
                               : Text(country.flagAlt),
                           Text('${country.id} - ${country.shortName}')
                         ],
                       ),
                     ),
-                  )
+                  ),
               ],
             ),
           AsyncError() => const Center(
