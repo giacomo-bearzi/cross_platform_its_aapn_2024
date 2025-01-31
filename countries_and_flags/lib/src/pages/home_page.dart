@@ -55,17 +55,22 @@ class _HomePageState extends ConsumerState<HomePage> {
               ReactiveTextField<String>(
                 formControlName: 'query',
                 decoration: InputDecoration(
-                  hintText: 'Italy',
+                  hintText: 'United States',
                   label: const Text('Cerca un Paese'),
                   suffixIcon: IconButton(
                     onPressed: () {
-                      // @TODO: funzione cancella campo
+                      form.control('query').value = null;
+                      setState(() {
+                        _query = null;
+                      });
                     },
                     icon: const Icon(Icons.cancel_rounded),
                   ),
                 ),
                 onSubmitted: (control) {
-                  // @TODO: funzione invio nome
+                  setState(() {
+                    _query = control.value;
+                  });
                 },
               ),
               const SizedBox(
