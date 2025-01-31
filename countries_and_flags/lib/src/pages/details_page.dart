@@ -20,7 +20,7 @@ class DetailsPage extends ConsumerWidget {
               // @TODO: cambio icona
               icon: const Icon(Icons.favorite_border_rounded),
             ),
-          )
+          ),
         ],
       ),
       body: Padding(
