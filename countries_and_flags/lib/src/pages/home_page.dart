@@ -39,18 +39,26 @@ class HomePage extends ConsumerWidget {
               crossAxisCount: 2,
               children: [
                 for (final country in value) //
-                  Card(
-                    child: Column(
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.favorite_border_rounded),
-                        ),
-                        country.flagUrl != ""
-                            ? Image.network(country.flagUrl)
-                            : Text(country.flagAlt),
-                        Text('${country.id} - ${country.shortName}')
-                      ],
+                  GestureDetector(
+                    onTap: () {
+                      // @TODO: navigazione pagina dettagli
+                    },
+                    child: Card(
+                      child: Column(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              // @TODO: aggiunta ai preferiti
+                            },
+                            // @TODO: cambio icona
+                            icon: const Icon(Icons.favorite_border_rounded),
+                          ),
+                          country.flagUrl != ""
+                              ? Image.network(country.flagUrl)
+                              : Text(country.flagAlt),
+                          Text('${country.id} - ${country.shortName}')
+                        ],
+                      ),
                     ),
                   )
               ],
