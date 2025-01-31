@@ -19,7 +19,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final restCountries = ref.watch(restCountriesProvider);
+    final restCountries = ref.watch(restCountriesProvider(_query));
     final favoritesCounter = ref.watch(
       favoriteRestCountriesNotifierProvider.select((value) => value.length),
     );
