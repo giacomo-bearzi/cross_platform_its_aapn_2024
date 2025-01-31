@@ -1,4 +1,5 @@
 import 'package:countries_and_flags/src/models/rest_country_model.dart';
+import 'package:countries_and_flags/src/providers/favorite_rest_countries_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,6 +9,7 @@ class DetailsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final favoriteCountries = ref.watch(favoriteRestCountriesNotifierProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(country.longName),
@@ -16,9 +18,22 @@ class DetailsPage extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: IconButton(
-              onPressed: () {},
-              // @TODO: cambio icona
-              icon: const Icon(Icons.favorite_border_rounded),
+              onPressed: () {
+                favoriteCountries.contains(country)
+                    ? ref
+                        .read(favoriteRestCountriesNotifierProvider.notifier)
+                        .remove(country)
+                    : ref
+                        .read(favoriteRestCountriesNotifierProvider.notifier)
+                        .add(country);
+              },
+              icon: favoriteCountries.contains(country)
+                  ? const Icon(Icons.favorite_rounded)
+                  : const Icon(Icons.favorite_border_rounded),
+              style: IconButton.styleFrom(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.red,
+              ),
             ),
           ),
         ],
@@ -30,9 +45,7 @@ class DetailsPage extends ConsumerWidget {
         ),
         child: Column(
           children: [
-            Expanded(
-              child: Image.network(country.flagUrl),
-            ),
+            Image.network(country.flagUrl),
             Text('${country.id} - ${country.shortName}'),
           ],
         ),
