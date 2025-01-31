@@ -7,7 +7,7 @@ part of 'favorite_rest_countries_notifier.dart';
 // **************************************************************************
 
 String _$favoriteRestCountriesNotifierHash() =>
-    r'8fc083713e8da8656cbd1f46b3e8dda5de5c7f35';
+    r'44ef00e80d6184b2ed96f0c1a4bad6844d31b0ba';
 
 /// See also [FavoriteRestCountriesNotifier].
 @ProviderFor(FavoriteRestCountriesNotifier)

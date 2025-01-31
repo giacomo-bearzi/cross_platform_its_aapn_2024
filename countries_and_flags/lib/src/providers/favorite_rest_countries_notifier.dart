@@ -21,4 +21,8 @@ class FavoriteRestCountriesNotifier extends _$FavoriteRestCountriesNotifier {
       ),
     ];
   }
+
+  bool checkFavorite(RestCountryModel country) {
+    return state.any((c) => c.id == country.id);
+  }
 }
