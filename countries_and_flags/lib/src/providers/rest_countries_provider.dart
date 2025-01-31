@@ -4,8 +4,16 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'rest_countries_provider.g.dart';
 
 @riverpod
-FutureOr<List<RestCountryModel>> restCountries(RestCountriesRef ref) async {
+FutureOr<List<RestCountryModel>> restCountries(
+  RestCountriesRef ref,
+  String? query,
+) async {
   final api = ref.watch(countriesAndFlagsApiProvider);
+
+  if (query != null) {
+    final result = await api.searchBy(query);
+    return result;
+  }
   final result = await api.fetchAll();
   return result;
 }
