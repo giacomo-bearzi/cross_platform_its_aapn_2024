@@ -15,7 +15,7 @@ class CountriesAndFlagsApi {
   final Dio client;
 
   Future<List<RestCountriesResponseApiModel>> fetchAll() async {
-    final response = await client.get('/v3.1/all');
+    final response = await client.get('all?fields=name,flags,cca2');
     final model = List.from(response.data);
     return model
         .map((countryJson) =>
