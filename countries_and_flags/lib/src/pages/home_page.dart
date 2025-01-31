@@ -92,36 +92,41 @@ class _HomePageState extends ConsumerState<HomePage> {
                             child: Card(
                               child: Column(
                                 children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      ref //
-                                              .read(
-                                                  favoriteRestCountriesNotifierProvider
-                                                      .notifier)
-                                              .checkFavorite(country)
-                                          ? ref //
-                                              .read(
-                                                  favoriteRestCountriesNotifierProvider
-                                                      .notifier)
-                                              .remove(country)
-                                          : ref //
-                                              .read(
-                                                  favoriteRestCountriesNotifierProvider
-                                                      .notifier)
-                                              .add(country);
-                                    },
-                                    icon: ref //
-                                            .read(
-                                                favoriteRestCountriesNotifierProvider
-                                                    .notifier)
-                                            .checkFavorite(country)
-                                        ? const Icon(Icons.favorite_rounded)
-                                        : const Icon(
-                                            Icons.favorite_border_rounded),
-                                    style: IconButton.styleFrom(
-                                      backgroundColor: Colors.white,
-                                      foregroundColor: Colors.red,
-                                    ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          ref //
+                                                  .read(
+                                                      favoriteRestCountriesNotifierProvider
+                                                          .notifier)
+                                                  .checkFavorite(country)
+                                              ? ref //
+                                                  .read(
+                                                      favoriteRestCountriesNotifierProvider
+                                                          .notifier)
+                                                  .remove(country)
+                                              : ref //
+                                                  .read(
+                                                      favoriteRestCountriesNotifierProvider
+                                                          .notifier)
+                                                  .add(country);
+                                        },
+                                        icon: ref //
+                                                .read(
+                                                    favoriteRestCountriesNotifierProvider
+                                                        .notifier)
+                                                .checkFavorite(country)
+                                            ? const Icon(Icons.favorite_rounded)
+                                            : const Icon(
+                                                Icons.favorite_border_rounded),
+                                        style: IconButton.styleFrom(
+                                          backgroundColor: Colors.white,
+                                          foregroundColor: Colors.red,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   country.flagUrl != ""
                                       ? Expanded(
