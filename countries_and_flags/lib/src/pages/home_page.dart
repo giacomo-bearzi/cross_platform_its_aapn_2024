@@ -2,6 +2,7 @@ import 'package:countries_and_flags/src/models/rest_country_model.dart';
 import 'package:countries_and_flags/src/providers/rest_countries_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -18,6 +19,7 @@ class HomePage extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: Badge.count(
+              // @TODO: fare il counter
               count: 1,
               child: IconButton(
                 onPressed: () {
@@ -41,7 +43,10 @@ class HomePage extends ConsumerWidget {
                 for (final country in value) //
                   GestureDetector(
                     onTap: () {
-                      // @TODO: navigazione pagina dettagli
+                      context.pushNamed(
+                        'details',
+                        extra: country,
+                      );
                     },
                     child: Card(
                       child: Column(
